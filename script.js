@@ -1,19 +1,22 @@
 // Funktion zum Anfordern der Berechtigung (für iOS 13+)
 async function requestPermission() {
-    if (typeof DeviceMotionEvent.requestPermission === 'function') {
-        try {
+    try {
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
             const permissionState = await DeviceMotionEvent.requestPermission();
             if (permissionState === 'granted') {
                 startAccelerationTracking();
+                showReadings();
             } else {
-                document.getElementById('sensor-values').innerHTML = '<p>Zugriff auf Sensoren wurde verweigert.</p>';
+                showError('Zugriff auf Sensoren wurde verweigert.');
             }
-        } catch (error) {
-            console.error('Fehler beim Anfordern der Berechtigung:', error);
+        } else {
+            // Für Geräte, die keine Berechtigung benötigen
+            startAccelerationTracking();
+            showReadings();
         }
-    } else {
-        // Für Geräte, die keine Berechtigung benötigen
-        startAccelerationTracking();
+    } catch (error) {
+        console.error('Fehler beim Anfordern der Berechtigung:', error);
+        showError('Fehler beim Zugriff auf Sensoren. Bitte stellen Sie sicher, dass Sie ein mobiles Gerät verwenden und die Seite über HTTPS aufrufen.');
     }
 }
 
@@ -30,9 +33,19 @@ function startAccelerationTracking() {
             }
         });
     } else {
-        document.getElementById('sensor-values').innerHTML = '<p>Ihr Gerät unterstützt keine Beschleunigungssensoren.</p>';
+        showError('Ihr Gerät unterstützt keine Beschleunigungssensoren.');
     }
 }
 
-// Starte die Sensoren beim Laden der Seite
-requestPermission(); 
+// Hilfsfunktionen für die UI
+function showReadings() {
+    document.getElementById('permission-btn').style.display = 'none';
+    document.getElementById('readings').style.display = 'block';
+}
+
+function showError(message) {
+    document.getElementById('sensor-values').innerHTML = `<p style="color: red;">${message}</p>`;
+}
+
+// Event-Listener für den Button
+document.getElementById('permission-btn').addEventListener('click', requestPermission); 

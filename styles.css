@@ -13,9 +13,25 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
 #sensor-values p {
     margin: 10px 0;
     font-size: 18px;
+}
+
+#permission-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+#permission-btn:hover {
+    background-color: #0056b3;
 } 
