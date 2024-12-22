@@ -1,14 +1,12 @@
 // Event-Listener für den Start-Button
-document.getElementById('start-btn').addEventListener('click', () => {
+document.getElementById('start-btn').addEventListener('click', async () => {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('sensor-screen').style.display = 'block';
-    requestPermission();
-});
-
-// Funktion zum Anfordern der Berechtigung (für iOS 13+)
-async function requestPermission() {
-    try {
-        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    
+    // Prüfen ob es ein iOS Gerät ist (iOS 13+)
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        try {
+            // Berechtigungsanfrage für iOS
             const permissionState = await DeviceMotionEvent.requestPermission();
             if (permissionState === 'granted') {
                 startAccelerationTracking();
@@ -16,16 +14,16 @@ async function requestPermission() {
             } else {
                 showError('Zugriff auf Sensoren wurde verweigert.');
             }
-        } else {
-            // Für Geräte, die keine Berechtigung benötigen
-            startAccelerationTracking();
-            showReadings();
+        } catch (error) {
+            console.error('Fehler bei iOS Berechtigungsanfrage:', error);
+            showError('Fehler beim Zugriff auf Sensoren. Bitte stellen Sie sicher, dass Sie ein iOS Gerät verwenden und die Seite über HTTPS aufrufen.');
         }
-    } catch (error) {
-        console.error('Fehler beim Anfordern der Berechtigung:', error);
-        showError('Fehler beim Zugriff auf Sensoren. Bitte stellen Sie sicher, dass Sie ein mobiles Gerät verwenden und die Seite über HTTPS aufrufen.');
+    } else {
+        // Für Android und andere Geräte
+        startAccelerationTracking();
+        showReadings();
     }
-}
+});
 
 // Funktion zum Starten der Beschleunigungsverfolgung
 function startAccelerationTracking() {
