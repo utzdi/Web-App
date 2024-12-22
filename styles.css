@@ -8,30 +8,50 @@ body {
     background-color: #f0f0f0;
 }
 
-#sensor-values {
+#welcome-screen, #sensor-screen {
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     text-align: center;
+    max-width: 90%;
+    width: 400px;
 }
 
-#sensor-values p {
-    margin: 10px 0;
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+p {
+    color: #34495e;
+    line-height: 1.6;
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+#readings p {
     font-size: 18px;
+    margin: 20px 0;
 }
 
-#permission-btn {
-    padding: 10px 20px;
+button {
+    padding: 12px 24px;
     font-size: 16px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 15px;
+    margin: 15px 0;
+    transition: background-color 0.3s ease;
 }
 
-#permission-btn:hover {
+button:hover {
     background-color: #0056b3;
 } 

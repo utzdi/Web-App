@@ -7,9 +7,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="sensor-values">
-        <button id="permission-btn">Sensoren aktivieren</button>
+    <div id="welcome-screen">
+        <h1>Willkommen!</h1>
+        <p>Diese App zeigt die Beschleunigungswerte Ihres Gerätes an.</p>
+        <button id="start-btn">Lass uns loslegen</button>
+    </div>
+
+    <div id="sensor-screen" style="display: none;">
+        <button id="permission-btn" style="display: none;">Sensoren aktivieren</button>
         <div id="readings" style="display: none;">
+            <h2>Beschleunigungswerte</h2>
             <p>X-Achse: <span id="x">0</span> m/s²</p>
             <p>Y-Achse: <span id="y">0</span> m/s²</p>
             <p>Z-Achse: <span id="z">0</span> m/s²</p>

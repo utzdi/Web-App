@@ -1,3 +1,10 @@
+// Event-Listener für den Start-Button
+document.getElementById('start-btn').addEventListener('click', () => {
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('sensor-screen').style.display = 'block';
+    requestPermission();
+});
+
 // Funktion zum Anfordern der Berechtigung (für iOS 13+)
 async function requestPermission() {
     try {
@@ -39,13 +46,9 @@ function startAccelerationTracking() {
 
 // Hilfsfunktionen für die UI
 function showReadings() {
-    document.getElementById('permission-btn').style.display = 'none';
     document.getElementById('readings').style.display = 'block';
 }
 
 function showError(message) {
-    document.getElementById('sensor-values').innerHTML = `<p style="color: red;">${message}</p>`;
-}
-
-// Event-Listener für den Button
-document.getElementById('permission-btn').addEventListener('click', requestPermission); 
+    document.getElementById('sensor-screen').innerHTML = `<p style="color: red;">${message}</p>`;
+} 
