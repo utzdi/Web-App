@@ -148,4 +148,20 @@ button:active {
     #game-grid {
         background-color: #1a1a1a;
     }
+}
+
+.game-over {
+    text-align: center;
+    padding: 20px;
+}
+
+.game-over h2 {
+    color: #dc3545;
+    font-size: clamp(24px, 5vw, 32px);
+    margin-bottom: 20px;
+}
+
+.game-over p {
+    font-size: clamp(18px, 4vw, 24px);
+    margin-bottom: 30px;
 } 

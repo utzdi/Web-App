@@ -59,6 +59,12 @@ function gameStep() {
     head.x = (head.x + GRID_SIZE) % GRID_SIZE;
     head.y = (head.y + GRID_SIZE) % GRID_SIZE;
 
+    // Kollisionsprüfung mit dem Körper
+    if (snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+        showGameOver();
+        return;
+    }
+
     // Neue Position zur Schlange hinzufügen
     snake.unshift(head);
 
@@ -110,10 +116,26 @@ function updateScore() {
     document.getElementById('score-value').textContent = score;
 }
 
-// Game Over
-function gameOver() {
+// Game Over anzeigen
+function showGameOver() {
     clearInterval(gameLoop);
-    document.getElementById('restart-btn').style.display = 'block';
+    const gameScreen = document.getElementById('game-screen');
+    gameScreen.innerHTML = `
+        <div class="game-over">
+            <h2>Game Over!</h2>
+            <p>Dein Score: ${score}</p>
+            <button id="restart-btn">Neu starten</button>
+        </div>
+    `;
+    
+    // Event-Listener für den Neustart-Button
+    document.getElementById('restart-btn').addEventListener('click', () => {
+        gameScreen.innerHTML = `
+            <div id="score">Punkte: <span id="score-value">0</span></div>
+            <div id="game-grid"></div>
+        `;
+        startGame();
+    });
 }
 
 // Bewegungssteuerung
