@@ -148,6 +148,16 @@ button:active {
     #game-grid {
         background-color: #1a1a1a;
     }
+
+    /* Neue hellere Farben für Schlange und Äpfel */
+    .snake {
+        background-color: #6EE7B7; /* Helles Mint-Grün */
+    }
+
+    .food {
+        background-color: #FF6B6B; /* Helles Rot */
+        box-shadow: 0 0 8px rgba(255, 107, 107, 0.5); /* Leichtes Glühen */
+    }
 }
 
 .game-over {
