@@ -128,8 +128,8 @@ function handleMotion(event) {
     // Richtung basierend auf Beschleunigung ändern
     if (Math.abs(dampedX) > Math.abs(dampedY)) {
         if (Math.abs(dampedX) > MOTION_THRESHOLD) {
-            if (dampedX > 0 && direction !== 'right') direction = 'left';
-            if (dampedX < 0 && direction !== 'left') direction = 'right';
+            if (dampedX > 0 && direction !== 'left') direction = 'right';
+            if (dampedX < 0 && direction !== 'right') direction = 'left';
         }
     } else {
         if (Math.abs(dampedY) > MOTION_THRESHOLD) {
