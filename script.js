@@ -215,4 +215,27 @@ document.getElementById('restart-btn').addEventListener('click', () => {
 // Fehlermeldung anzeigen
 function showError(message) {
     document.getElementById('game-screen').innerHTML = `<p style="color: red;">${message}</p>`;
+}
+
+// Menu Toggle Functionality
+document.getElementById('menu-toggle').addEventListener('click', toggleMenu);
+
+function toggleMenu() {
+    const nav = document.querySelector('.main-nav');
+    nav.classList.toggle('open');
+    
+    // Create or remove overlay
+    let overlay = document.querySelector('.menu-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'menu-overlay';
+        document.body.appendChild(overlay);
+        
+        // Close menu when clicking overlay
+        overlay.addEventListener('click', () => {
+            nav.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+    }
+    overlay.classList.toggle('open');
 } 
