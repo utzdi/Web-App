@@ -59,8 +59,8 @@ function gameStep() {
     head.x = (head.x + GRID_SIZE) % GRID_SIZE;
     head.y = (head.y + GRID_SIZE) % GRID_SIZE;
 
-    // Kollisionsprüfung mit sich selbst
-    if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+    // Kollisionsprüfung mit sich selbst (nur mit dem Körper, nicht mit dem Kopf)
+    if (snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
         gameOver();
         return;
     }
