@@ -55,11 +55,9 @@ function gameStep() {
         case 'right': head.x++; break;
     }
 
-    // Kollisionsprüfung mit Wänden
-    if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
-        gameOver();
-        return;
-    }
+    // Durch Wände gleiten (Wrap-Around)
+    head.x = (head.x + GRID_SIZE) % GRID_SIZE;
+    head.y = (head.y + GRID_SIZE) % GRID_SIZE;
 
     // Kollisionsprüfung mit sich selbst
     if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
