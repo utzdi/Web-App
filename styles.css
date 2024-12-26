@@ -3,10 +3,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    padding-top: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,9 +14,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
 }
 
 #welcome-screen, #game-screen {
@@ -140,10 +138,13 @@ button:active {
 /* Menu Icon */
 .menu-icon {
     position: fixed;
-    top: 10px;
+    top: env(safe-area-inset-top, 10px);
     left: 10px;
-    z-index: 1001;
+    z-index: 9999;
     cursor: pointer;
+    padding: 10px;
+    background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .material-icons {
@@ -153,6 +154,9 @@ button:active {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Navigation styles */
@@ -161,12 +165,13 @@ button:active {
     top: 0;
     left: -250px;
     width: 250px;
-    height: 100vh;
+    height: -webkit-fill-available;
     background-color: #2c3e50;
-    padding: 60px 0 20px;
+    padding: calc(env(safe-area-inset-top, 20px) + 40px) 0 20px;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-    z-index: 1000;
+    z-index: 9998;
     transition: left 0.3s ease;
+    -webkit-overflow-scrolling: touch;
 }
 
 .main-nav.open {

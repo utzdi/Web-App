@@ -218,10 +218,27 @@ function showError(message) {
 }
 
 // Menu Toggle Functionality
-document.getElementById('menu-toggle').addEventListener('click', toggleMenu);
+function initMenuToggle() {
+    const menuToggle = document.getElementById('menu-toggle');
+    if (!menuToggle) {
+        console.error('Menu toggle button not found');
+        return;
+    }
 
-function toggleMenu() {
+    // Touch-Event für bessere iOS-Unterstützung
+    menuToggle.addEventListener('touchstart', toggleMenu, { passive: true });
+    menuToggle.addEventListener('click', toggleMenu);
+}
+
+function toggleMenu(event) {
+    event.preventDefault(); // Verhindert ungewollte Browser-Aktionen
+    
     const nav = document.querySelector('.main-nav');
+    if (!nav) {
+        console.error('Navigation not found');
+        return;
+    }
+
     nav.classList.toggle('open');
     
     // Create or remove overlay
@@ -231,11 +248,20 @@ function toggleMenu() {
         overlay.className = 'menu-overlay';
         document.body.appendChild(overlay);
         
-        // Close menu when clicking overlay
-        overlay.addEventListener('click', () => {
-            nav.classList.remove('open');
-            overlay.classList.remove('open');
-        });
+        // Touch-Event für bessere iOS-Unterstützung
+        overlay.addEventListener('touchstart', closeMenu, { passive: true });
+        overlay.addEventListener('click', closeMenu);
     }
     overlay.classList.toggle('open');
-} 
+}
+
+function closeMenu() {
+    const nav = document.querySelector('.main-nav');
+    const overlay = document.querySelector('.menu-overlay');
+    
+    if (nav) nav.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+}
+
+// Initialisiere Menu Toggle nach dem DOM geladen ist
+document.addEventListener('DOMContentLoaded', initMenuToggle); 
