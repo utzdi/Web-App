@@ -215,34 +215,4 @@ document.getElementById('restart-btn').addEventListener('click', () => {
 // Fehlermeldung anzeigen
 function showError(message) {
     document.getElementById('game-screen').innerHTML = `<p style="color: red;">${message}</p>`;
-}
-
-// Dark Mode Toggle
-function toggleDarkMode() {
-    const html = document.documentElement;
-    const isDarkMode = html.classList.toggle('dark-mode');
-    const buttons = document.querySelectorAll('.theme-btn');
-    buttons.forEach(btn => {
-        btn.textContent = isDarkMode ? '☀️' : '🌙';
-    });
-    // Speichere die Einstellung
-    localStorage.setItem('darkMode', isDarkMode);
-}
-
-// Dark Mode Einstellung wiederherstellen
-function initTheme() {
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (savedDarkMode) {
-        document.documentElement.classList.add('dark-mode');
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.textContent = '☀️';
-        });
-    }
-}
-
-// Event Listener für Dark Mode Buttons
-document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
-document.getElementById('theme-toggle-game').addEventListener('click', toggleDarkMode);
-
-// Theme initialisieren
-initTheme(); 
+} 
