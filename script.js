@@ -59,8 +59,21 @@ function gameStep() {
     head.x = (head.x + GRID_SIZE) % GRID_SIZE;
     head.y = (head.y + GRID_SIZE) % GRID_SIZE;
 
-    // Kollisionsprüfung mit dem Körper
-    if (snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+    // Debug-Logging für Kollisionserkennung
+    console.log('Head position:', head);
+    console.log('Snake body:', snake.slice(1));
+
+    // Verbesserte Kollisionsprüfung mit dem Körper
+    const collision = snake.slice(1).some(segment => {
+        const hasCollision = segment.x === head.x && segment.y === head.y;
+        if (hasCollision) {
+            console.log('Collision detected with segment:', segment);
+        }
+        return hasCollision;
+    });
+
+    if (collision) {
+        console.log('Game Over - Collision with body');
         showGameOver();
         return;
     }
