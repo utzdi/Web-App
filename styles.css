@@ -323,8 +323,9 @@ button:active {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    z-index: 9997;
     display: none;
+    cursor: pointer;
 }
 
 .menu-overlay.open {
@@ -452,4 +453,267 @@ button:active {
     font-size: 16px;
     line-height: 1.5;
     margin-bottom: 25px;
+}
+
+#settings-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1;
+}
+
+.settings-content {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    background: transparent;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-content h2 {
+    color: white;
+    font-size: clamp(28px, 6vw, 48px);
+    margin: 50px 0 40px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.settings-container {
+    width: min(600px, 90%);
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Setting Item Styles */
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.setting-label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+    font-size: clamp(16px, 3vw, 20px);
+}
+
+.setting-label .material-icons {
+    font-size: 28px;
+    color: white;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: #2196F3;
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* Dark Mode Styles */
+html[data-theme='dark'] {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+html[data-theme='dark'] #game-screen {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='dark'] #game-grid {
+    background-color: #2d2d2d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+html[data-theme='dark'] .grid-cell {
+    background-color: #333333;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+html[data-theme='dark'] .snake {
+    background: linear-gradient(45deg, #00ff88 0%, #00ffcc 100%);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+    border: none;
+    border-radius: 3px;
+}
+
+html[data-theme='dark'] .food {
+    background: linear-gradient(45deg, #ff3366 0%, #ff6b6b 100%);
+    box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+    border: none;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(255, 51, 102, 0.7);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+    }
+}
+
+html[data-theme='dark'] #score {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    font-size: clamp(20px, 4vw, 28px);
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+html[data-theme='dark'] .game-over {
+    background-color: rgba(26, 26, 26, 0.95);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme='dark'] .game-over h2 {
+    background: linear-gradient(45deg, #ff3366, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+html[data-theme='dark'] .game-over p {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme='dark'] #restart-btn,
+html[data-theme='dark'] #back-to-start-btn {
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    border: none;
+    color: #1a1a1a;
+    font-weight: bold;
+    text-shadow: none;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    transition: all 0.3s ease;
+}
+
+html[data-theme='dark'] #restart-btn:hover,
+html[data-theme='dark'] #back-to-start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+    filter: brightness(1.1);
+}
+
+html[data-theme='dark'] .settings-content,
+html[data-theme='dark'] .tutorial-content {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme='dark'] .setting-item {
+    background-color: #2d2d2d;
+    border: 1px solid #383838;
+}
+
+html[data-theme='dark'] .setting-label {
+    color: #ffffff;
+}
+
+html[data-theme='dark'] .setting-label .material-icons {
+    color: #00ff88;
+}
+
+html[data-theme='dark'] .tutorial-step {
+    background-color: #2d2d2d;
+    border: 1px solid #383838;
+}
+
+html[data-theme='dark'] .tutorial-step .material-icons {
+    color: #00ff88;
+}
+
+html[data-theme='dark'] .tutorial-step p {
+    color: #ffffff;
+}
+
+html[data-theme='dark'] h2 {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme='dark'] #settings-screen,
+html[data-theme='dark'] #welcome-screen {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 } 

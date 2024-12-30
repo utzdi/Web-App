@@ -280,6 +280,16 @@ document.getElementById('restart-btn').addEventListener('click', () => {
 });
 
 // Menu Toggle Functionality
+function toggleMenu() {
+    const nav = document.querySelector('.main-nav');
+    const overlay = document.querySelector('.menu-overlay');
+    
+    if (!nav || !overlay) return;
+
+    nav.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
 function initMenuToggle() {
     const menuToggle = document.getElementById('menu-toggle');
     if (!menuToggle) {
@@ -307,20 +317,54 @@ function initMenuToggle() {
         // Zurück zur Willkommensseite
         document.getElementById('game-screen').style.display = 'none';
         document.getElementById('tutorial').style.display = 'none';
+        document.getElementById('settings-screen').style.display = 'none';
         document.getElementById('welcome-screen').style.display = 'block';
+        
+        // Aktiven Button aktualisieren
+        updateActiveNavButton('home-btn');
+        
         // Menü schließen
-        toggleMenu();
+        const nav = document.querySelector('.main-nav');
+        const overlay = document.querySelector('.menu-overlay');
+        if (nav && overlay) {
+            nav.classList.remove('open');
+            overlay.classList.remove('open');
+        }
+    });
+
+    // Event-Listener für den Settings-Button
+    document.getElementById('settings-btn').addEventListener('click', () => {
+        // Spiel stoppen falls es läuft
+        if (gameLoop) {
+            clearInterval(gameLoop);
+        }
+        // Einstellungen anzeigen
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById('tutorial').style.display = 'none';
+        document.getElementById('welcome-screen').style.display = 'none';
+        document.getElementById('settings-screen').style.display = 'block';
+        
+        // Aktiven Button aktualisieren
+        updateActiveNavButton('settings-btn');
+        
+        // Menü schließen
+        const nav = document.querySelector('.main-nav');
+        const overlay = document.querySelector('.menu-overlay');
+        if (nav && overlay) {
+            nav.classList.remove('open');
+            overlay.classList.remove('open');
+        }
     });
 }
 
-function toggleMenu() {
-    const nav = document.querySelector('.main-nav');
-    const overlay = document.querySelector('.menu-overlay');
-    
-    if (!nav || !overlay) return;
-
-    nav.classList.toggle('open');
-    overlay.classList.toggle('open');
+// Hilfsfunktion zum Aktualisieren des aktiven Navigations-Buttons
+function updateActiveNavButton(activeId) {
+    // Alle Buttons deaktivieren
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    // Aktiven Button markieren
+    document.getElementById(activeId).classList.add('active');
 }
 
 // Initialisiere Menu Toggle nach dem DOM geladen ist
@@ -329,4 +373,31 @@ document.addEventListener('DOMContentLoaded', initMenuToggle);
 // Tutorial schließen und Spiel starten
 document.getElementById('tutorial-close').addEventListener('click', () => {
     closeTutorial();
+});
+
+// Dark Mode Funktionalität
+function initDarkMode() {
+    const toggle = document.getElementById('dark-mode-toggle');
+    if (!toggle) return;
+
+    // Gespeicherte Einstellung laden
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    toggle.checked = isDarkMode;
+    updateTheme(isDarkMode);
+
+    // Event Listener für Toggle
+    toggle.addEventListener('change', (e) => {
+        updateTheme(e.target.checked);
+        localStorage.setItem('darkMode', e.target.checked);
+    });
+}
+
+function updateTheme(isDark) {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+}
+
+// Initialisiere Dark Mode nach dem DOM geladen ist
+document.addEventListener('DOMContentLoaded', () => {
+    initMenuToggle();
+    initDarkMode();
 }); 
