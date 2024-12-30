@@ -7,16 +7,29 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    padding: 20px;
+    min-height: 100vh;
+    position: relative; /* Für absolute Positionierung der Screens */
 }
 
+/* Game Screen Container */
+#game-screen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: clamp(20px, 5vw, 40px);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    width: min(90%, 500px);
+    z-index: 1;
+}
+
+/* Welcome Screen */
 #welcome-screen {
     position: fixed;
     top: 0;
@@ -28,6 +41,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    z-index: 1;
 }
 
 .welcome-content {
@@ -35,13 +49,18 @@ body {
     width: 90%;
     text-align: center;
     color: white;
+    margin: 0 auto; /* Zentriert den Inhalt horizontal */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Zentriert den Inhalt vertikal */
 }
 
 #welcome-screen h1 {
     font-size: clamp(36px, 8vw, 64px);
-    margin-bottom: 30px;
+    margin: 50px 0 30px 0;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: 100%; /* Volle Breite für konsistente Zentrierung */
 }
 
 .tagline {
@@ -51,10 +70,12 @@ body {
 }
 
 .features {
+    width: 100%; /* Volle Breite für konsistente Zentrierung */
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin-bottom: 40px;
+    align-items: stretch; /* Streckt die Features auf volle Breite */
 }
 
 .feature {
@@ -94,15 +115,6 @@ body {
     background-color: #219a52;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-#game-screen {
-    background-color: white;
-    padding: clamp(20px, 5vw, 40px);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
-    width: min(90%, 500px);
 }
 
 #game-grid {
@@ -409,4 +421,35 @@ button:active {
 
 #back-to-start-btn:hover {
     background-color: #5a6268;
+}
+
+/* Device Error Screen */
+.device-error {
+    text-align: center;
+    padding: 30px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.device-error .error-icon {
+    font-size: 64px;
+    color: #6c757d;
+    margin-bottom: 20px;
+    background: none;
+    box-shadow: none;
+    display: block;
+    padding: 0;
+}
+
+.device-error h2 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.device-error p {
+    color: #6c757d;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 25px;
 } 

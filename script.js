@@ -198,26 +198,71 @@ function closeTutorial() {
     startGame();
 }
 
+// Fehlermeldung anzeigen
+function showError(message) {
+    const gameScreen = document.getElementById('game-screen');
+    gameScreen.innerHTML = `
+        <div class="device-error">
+            <span class="material-icons error-icon">phone_iphone</span>
+            <h2>Nur auf Mobilgeräten verfügbar</h2>
+            <p>${message}</p>
+            <button id="back-to-start-btn">Zurück zum Start</button>
+        </div>
+    `;
+
+    // Event-Listener für den Zurück-Button
+    document.getElementById('back-to-start-btn').addEventListener('click', () => {
+        gameScreen.style.display = 'none';
+        document.getElementById('welcome-screen').style.display = 'block';
+    });
+}
+
 // Event-Listener für den Start-Button
 document.getElementById('start-btn').addEventListener('click', async () => {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     
-    // Prüfen ob es ein iOS Gerät ist (iOS 13+)
-    if (typeof DeviceMotionEvent.requestPermission === 'function') {
-        try {
-            const permissionState = await DeviceMotionEvent.requestPermission();
-            if (permissionState === 'granted') {
-                showTutorial(); // Zeige Tutorial vor Spielstart
-            } else {
-                showError('Zugriff auf Sensoren wurde verweigert.');
+    // Prüfen ob DeviceMotion verfügbar ist
+    if (window.DeviceMotionEvent) {
+        // Prüfen ob es ein iOS Gerät ist (iOS 13+)
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            try {
+                const permissionState = await DeviceMotionEvent.requestPermission();
+                if (permissionState === 'granted') {
+                    showTutorial();
+                } else {
+                    showError('Bitte erlaube den Zugriff auf die Bewegungssensoren, um das Spiel spielen zu können.');
+                }
+            } catch (error) {
+                console.error('Fehler bei iOS Berechtigungsanfrage:', error);
+                showError('Dieses Spiel funktioniert nur auf mobilen Geräten. Bitte öffne die Seite auf deinem Smartphone oder Tablet.');
             }
-        } catch (error) {
-            console.error('Fehler bei iOS Berechtigungsanfrage:', error);
-            showError('Fehler beim Zugriff auf Sensoren. Bitte stellen Sie sicher, dass Sie ein iOS Gerät verwenden und die Seite über HTTPS aufrufen.');
+        } else {
+            // Test ob Bewegungssensoren tatsächlich Daten liefern
+            let hasMotionData = false;
+            const motionTest = (event) => {
+                if (event.accelerationIncludingGravity && 
+                    (event.accelerationIncludingGravity.x !== null || 
+                     event.accelerationIncludingGravity.y !== null || 
+                     event.accelerationIncludingGravity.z !== null)) {
+                    hasMotionData = true;
+                }
+            };
+
+            window.addEventListener('devicemotion', motionTest, { once: true });
+
+            // Prüfe nach kurzer Zeit, ob Daten empfangen wurden
+            setTimeout(() => {
+                window.removeEventListener('devicemotion', motionTest);
+                if (hasMotionData) {
+                    showTutorial();
+                } else {
+                    showError('Dieses Spiel funktioniert nur auf mobilen Geräten. Bitte öffne die Seite auf deinem Smartphone oder Tablet.');
+                }
+            }, 1000);
         }
     } else {
-        showTutorial(); // Zeige Tutorial vor Spielstart
+        showError('Dieses Spiel funktioniert nur auf mobilen Geräten. Bitte öffne die Seite auf deinem Smartphone oder Tablet.');
     }
 });
 
@@ -233,11 +278,6 @@ document.getElementById('restart-btn').addEventListener('click', () => {
     document.getElementById('restart-btn').style.display = 'none';
     startGame();
 });
-
-// Fehlermeldung anzeigen
-function showError(message) {
-    document.getElementById('game-screen').innerHTML = `<p style="color: red;">${message}</p>`;
-}
 
 // Menu Toggle Functionality
 function initMenuToggle() {
