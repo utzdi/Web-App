@@ -137,7 +137,10 @@ function showGameOver() {
         <div class="game-over">
             <h2>Game Over!</h2>
             <p>Dein Score: ${score}</p>
-            <button id="restart-btn">Neu starten</button>
+            <div class="game-over-buttons">
+                <button id="restart-btn">Neu starten</button>
+                <button id="back-to-start-btn">Zurück zum Start</button>
+            </div>
         </div>
     `;
     
@@ -148,6 +151,12 @@ function showGameOver() {
             <div id="game-grid"></div>
         `;
         startGame();
+    });
+
+    // Event-Listener für den Zurück zum Start-Button
+    document.getElementById('back-to-start-btn').addEventListener('click', () => {
+        gameScreen.style.display = 'none';
+        document.getElementById('welcome-screen').style.display = 'block';
     });
 }
 
@@ -176,6 +185,19 @@ function handleMotion(event) {
     lastAcceleration = { x: dampedX, y: dampedY };
 }
 
+// Tutorial Funktionalität
+function showTutorial() {
+    const tutorial = document.getElementById('tutorial');
+    tutorial.style.display = 'flex';
+}
+
+function closeTutorial() {
+    const tutorial = document.getElementById('tutorial');
+    tutorial.style.display = 'none';
+    // Starte das Spiel erst nach dem Schließen des Tutorials
+    startGame();
+}
+
 // Event-Listener für den Start-Button
 document.getElementById('start-btn').addEventListener('click', async () => {
     document.getElementById('welcome-screen').style.display = 'none';
@@ -186,7 +208,7 @@ document.getElementById('start-btn').addEventListener('click', async () => {
         try {
             const permissionState = await DeviceMotionEvent.requestPermission();
             if (permissionState === 'granted') {
-                startGame();
+                showTutorial(); // Zeige Tutorial vor Spielstart
             } else {
                 showError('Zugriff auf Sensoren wurde verweigert.');
             }
@@ -195,7 +217,7 @@ document.getElementById('start-btn').addEventListener('click', async () => {
             showError('Fehler beim Zugriff auf Sensoren. Bitte stellen Sie sicher, dass Sie ein iOS Gerät verwenden und die Seite über HTTPS aufrufen.');
         }
     } else {
-        startGame();
+        showTutorial(); // Zeige Tutorial vor Spielstart
     }
 });
 
@@ -228,6 +250,20 @@ function initMenuToggle() {
     // Touch-Event für bessere iOS-Unterstützung
     menuToggle.addEventListener('touchstart', toggleMenu, { passive: true });
     menuToggle.addEventListener('click', toggleMenu);
+
+    // Event-Listener für den Home-Button
+    document.getElementById('home-btn').addEventListener('click', () => {
+        // Spiel stoppen falls es läuft
+        if (gameLoop) {
+            clearInterval(gameLoop);
+        }
+        // Zurück zur Willkommensseite
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById('tutorial').style.display = 'none';
+        document.getElementById('welcome-screen').style.display = 'block';
+        // Menü schließen
+        closeMenu();
+    });
 }
 
 function toggleMenu(event) {
@@ -264,4 +300,9 @@ function closeMenu() {
 }
 
 // Initialisiere Menu Toggle nach dem DOM geladen ist
-document.addEventListener('DOMContentLoaded', initMenuToggle); 
+document.addEventListener('DOMContentLoaded', initMenuToggle);
+
+// Tutorial schließen und Spiel starten
+document.getElementById('tutorial-close').addEventListener('click', () => {
+    closeTutorial();
+}); 

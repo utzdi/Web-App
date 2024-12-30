@@ -17,7 +17,86 @@ body {
     padding: 20px;
 }
 
-#welcome-screen, #game-screen {
+#welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.welcome-content {
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+    color: white;
+}
+
+#welcome-screen h1 {
+    font-size: clamp(36px, 8vw, 64px);
+    margin-bottom: 30px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tagline {
+    font-size: clamp(18px, 4vw, 24px);
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.feature .material-icons {
+    font-size: 28px;
+    color: white;
+    background: none;
+    box-shadow: none;
+}
+
+.feature p {
+    color: white;
+    margin: 0;
+    text-align: left;
+    font-size: clamp(16px, 3vw, 18px);
+}
+
+#welcome-screen #start-btn {
+    background-color: #27ae60;
+    font-size: clamp(18px, 4vw, 24px);
+    padding: 15px 40px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#welcome-screen #start-btn:hover {
+    background-color: #219a52;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+#game-screen {
     background-color: white;
     padding: clamp(20px, 5vw, 40px);
     border-radius: 10px;
@@ -138,8 +217,8 @@ button:active {
 /* Menu Icon */
 .menu-icon {
     position: fixed;
-    top: env(safe-area-inset-top, 10px);
-    left: 10px;
+    top: env(safe-area-inset-top, 20px);
+    left: 20px;
     z-index: 9999;
     cursor: pointer;
     padding: 10px;
@@ -165,13 +244,15 @@ button:active {
     top: 0;
     left: -250px;
     width: 250px;
-    height: -webkit-fill-available;
+    height: 100vh;
+    min-height: -webkit-fill-available;
     background-color: #2c3e50;
-    padding: calc(env(safe-area-inset-top, 20px) + 40px) 0 20px;
+    padding: calc(env(safe-area-inset-top, 40px) + 60px) 0 0;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
     z-index: 9998;
     transition: left 0.3s ease;
     -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
 }
 
 .main-nav.open {
@@ -188,6 +269,7 @@ button:active {
     color: white;
     font-size: 1.4rem;
     font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 30px;
     text-align: center;
 }
@@ -235,4 +317,96 @@ button:active {
 
 .menu-overlay.open {
     display: block;
+}
+
+/* Tutorial styles */
+.tutorial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.tutorial-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+}
+
+.tutorial-content h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.tutorial-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.tutorial-step {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.tutorial-step .material-icons {
+    font-size: 24px;
+    color: #007bff;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.tutorial-step p {
+    margin: 0;
+    text-align: left;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+#tutorial-close {
+    background-color: #28a745;
+    margin-bottom: 0;
+}
+
+#tutorial-close:hover {
+    background-color: #218838;
+}
+
+#welcome-screen h1 {
+    color: #2c3e50;
+    margin-top: 50px;
+    margin-bottom: clamp(15px, 4vw, 30px);
+    font-size: clamp(24px, 5vw, 32px);
+}
+
+.game-over-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+#back-to-start-btn {
+    background-color: #6c757d;  /* Grauer Button für "Zurück" */
+}
+
+#back-to-start-btn:hover {
+    background-color: #5a6268;
 } 

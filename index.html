@@ -17,16 +17,33 @@
             <span class="nav-title">Snake Motion</span>
             <div class="nav-links">
                 <button id="home-btn" class="nav-btn active">Start</button>
-                <button id="highscore-btn" class="nav-btn">Highscores</button>
                 <button id="settings-btn" class="nav-btn">Einstellungen</button>
             </div>
         </div>
     </nav>
 
     <div id="welcome-screen">
-        <h1>Snake Motion</h1>
-        <p>Steuere die Schlange durch Bewegung deines Geräts!</p>
-        <button id="start-btn">Spiel starten</button>
+        <div class="welcome-content">
+            <h1>Snake Motion</h1>
+            <div class="game-description">
+                <p class="tagline">Das klassische Snake-Spiel neu gedacht!</p>
+                <div class="features">
+                    <div class="feature">
+                        <span class="material-icons">motion_photos_on</span>
+                        <p>Steuere die Schlange durch Bewegung deines Geräts</p>
+                    </div>
+                    <div class="feature">
+                        <span class="material-icons">sports_score</span>
+                        <p>Sammle Punkte und verbessere deinen Highscore</p>
+                    </div>
+                    <div class="feature">
+                        <span class="material-icons">replay</span>
+                        <p>Gleite durch Wände und erscheine auf der anderen Seite</p>
+                    </div>
+                </div>
+            </div>
+            <button id="start-btn">Spiel starten</button>
+        </div>
     </div>
 
     <div id="game-screen" style="display: none;">
@@ -34,6 +51,32 @@
         <div id="game-grid"></div>
         <button id="restart-btn" style="display: none;">Neu starten</button>
     </div>
+
+    <div id="tutorial" class="tutorial" style="display: none;">
+        <div class="tutorial-content">
+            <h2>So wird gespielt:</h2>
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <span class="material-icons">screen_rotation</span>
+                    <p>
+                        • Neige dein Gerät nach links/rechts um die Richtung zu ändern
+                        <br>
+                        • Neige es nach vorne/hinten für hoch/runter
+                    </p>
+                </div>
+                <div class="tutorial-step">
+                    <span class="material-icons">apple</span>
+                    <p>Sammle die roten Äpfel um Punkte zu bekommen</p>
+                </div>
+                <div class="tutorial-step">
+                    <span class="material-icons">refresh</span>
+                    <p>Die Schlange kann durch die Wände gleiten</p>
+                </div>
+            </div>
+            <button id="tutorial-close">Verstanden!</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html> 
