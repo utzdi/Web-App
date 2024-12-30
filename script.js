@@ -287,9 +287,16 @@ function initMenuToggle() {
         return;
     }
 
-    // Touch-Event für bessere iOS-Unterstützung
-    menuToggle.addEventListener('touchstart', toggleMenu, { passive: true });
+    // Erstelle den Overlay einmalig beim Start
+    const overlay = document.createElement('div');
+    overlay.className = 'menu-overlay';
+    document.body.appendChild(overlay);
+
+    // Event-Listener für den Menu-Button
     menuToggle.addEventListener('click', toggleMenu);
+    
+    // Event-Listener für den Overlay
+    overlay.addEventListener('click', toggleMenu);
 
     // Event-Listener für den Home-Button
     document.getElementById('home-btn').addEventListener('click', () => {
@@ -302,41 +309,18 @@ function initMenuToggle() {
         document.getElementById('tutorial').style.display = 'none';
         document.getElementById('welcome-screen').style.display = 'block';
         // Menü schließen
-        closeMenu();
+        toggleMenu();
     });
 }
 
-function toggleMenu(event) {
-    event.preventDefault(); // Verhindert ungewollte Browser-Aktionen
-    
-    const nav = document.querySelector('.main-nav');
-    if (!nav) {
-        console.error('Navigation not found');
-        return;
-    }
-
-    nav.classList.toggle('open');
-    
-    // Create or remove overlay
-    let overlay = document.querySelector('.menu-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'menu-overlay';
-        document.body.appendChild(overlay);
-        
-        // Touch-Event für bessere iOS-Unterstützung
-        overlay.addEventListener('touchstart', closeMenu, { passive: true });
-        overlay.addEventListener('click', closeMenu);
-    }
-    overlay.classList.toggle('open');
-}
-
-function closeMenu() {
+function toggleMenu() {
     const nav = document.querySelector('.main-nav');
     const overlay = document.querySelector('.menu-overlay');
     
-    if (nav) nav.classList.remove('open');
-    if (overlay) overlay.classList.remove('open');
+    if (!nav || !overlay) return;
+
+    nav.classList.toggle('open');
+    overlay.classList.toggle('open');
 }
 
 // Initialisiere Menu Toggle nach dem DOM geladen ist
