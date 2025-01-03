@@ -3,6 +3,7 @@ const GRID_SIZE = 20;
 const INITIAL_SNAKE_LENGTH = 3;
 const GAME_SPEED = 150; // Millisekunden zwischen Bewegungen
 const MOTION_THRESHOLD = 2; // Schwellenwert für Bewegungserkennung
+const INVULNERABLE_STEPS = 3; // Anzahl der Schritte, in denen man nicht sterben kann
 
 // Spielvariablen
 let snake = [];
@@ -11,6 +12,7 @@ let direction = 'right';
 let score = 0;
 let gameLoop;
 let lastAcceleration = { x: 0, y: 0 };
+let stepCount = 0; // Zähler für die Spielschritte
 
 // Spiel initialisieren
 function initGame() {
@@ -35,8 +37,9 @@ function initGame() {
     // Erste Frucht platzieren
     placeFood();
     
-    // Score zurücksetzen
+    // Score und Schritte zurücksetzen
     score = 0;
+    stepCount = 0;
     updateScore();
     
     // Schlange zeichnen
@@ -59,23 +62,17 @@ function gameStep() {
     head.x = (head.x + GRID_SIZE) % GRID_SIZE;
     head.y = (head.y + GRID_SIZE) % GRID_SIZE;
 
-    // Debug-Logging für Kollisionserkennung
-    console.log('Head position:', head);
-    console.log('Snake body:', snake.slice(1));
+    // Kollisionsprüfung nur nach der Unverwundbarkeitsphase
+    if (stepCount >= INVULNERABLE_STEPS) {
+        const collision = snake.slice(1).some(segment => {
+            return segment.x === head.x && segment.y === head.y;
+        });
 
-    // Verbesserte Kollisionsprüfung mit dem Körper
-    const collision = snake.slice(1).some(segment => {
-        const hasCollision = segment.x === head.x && segment.y === head.y;
-        if (hasCollision) {
-            console.log('Collision detected with segment:', segment);
+        if (collision) {
+            console.log('Game Over - Collision with body');
+            showGameOver();
+            return;
         }
-        return hasCollision;
-    });
-
-    if (collision) {
-        console.log('Game Over - Collision with body');
-        showGameOver();
-        return;
     }
 
     // Neue Position zur Schlange hinzufügen
@@ -90,7 +87,9 @@ function gameStep() {
         snake.pop();
     }
 
+    // Schlange zeichnen und Schrittzähler erhöhen
     drawSnake();
+    stepCount++;
 }
 
 // Frucht platzieren
