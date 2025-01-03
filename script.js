@@ -160,6 +160,11 @@ function showGameOver() {
     });
 }
 
+// Geräteerkennung
+function isAndroid() {
+    return /Android/i.test(navigator.userAgent);
+}
+
 // Bewegungssteuerung
 function handleMotion(event) {
     const accel = event.accelerationIncludingGravity;
@@ -172,13 +177,27 @@ function handleMotion(event) {
     // Richtung basierend auf Beschleunigung ändern
     if (Math.abs(dampedX) > Math.abs(dampedY)) {
         if (Math.abs(dampedX) > MOTION_THRESHOLD) {
-            if (dampedX > 0 && direction !== 'left') direction = 'right';
-            if (dampedX < 0 && direction !== 'right') direction = 'left';
+            if (isAndroid()) {
+                // Android-Steuerung (invertiert)
+                if (dampedX < 0 && direction !== 'left') direction = 'right';
+                if (dampedX > 0 && direction !== 'right') direction = 'left';
+            } else {
+                // iOS-Steuerung (original)
+                if (dampedX > 0 && direction !== 'left') direction = 'right';
+                if (dampedX < 0 && direction !== 'right') direction = 'left';
+            }
         }
     } else {
         if (Math.abs(dampedY) > MOTION_THRESHOLD) {
-            if (dampedY > 0 && direction !== 'down') direction = 'up';
-            if (dampedY < 0 && direction !== 'up') direction = 'down';
+            if (isAndroid()) {
+                // Android-Steuerung (invertiert)
+                if (dampedY < 0 && direction !== 'down') direction = 'up';
+                if (dampedY > 0 && direction !== 'up') direction = 'down';
+            } else {
+                // iOS-Steuerung (original)
+                if (dampedY > 0 && direction !== 'down') direction = 'up';
+                if (dampedY < 0 && direction !== 'up') direction = 'down';
+            }
         }
     }
 
